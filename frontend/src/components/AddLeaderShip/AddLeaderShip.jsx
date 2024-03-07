@@ -159,6 +159,13 @@ function AddLeaderShip() {
         console.log(err);
       });
   };
+  const handleDelete = (id) => {
+    axios.delete(`${SERVER_URL}/admin/delete-leadership/${id}`).then((res) => {
+      if (res.status === 200) {
+        toast.success("LeaderShip deleted successfully");
+      }
+    })
+  }
 
   return (
     <>
