@@ -6,12 +6,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import SERVER_URL from "../../config/SERVER_URL";
 
-function AllSocialMedia() {
+function AllDeveloper() {
   const navigate = useNavigate();
-  const [gallery, setGallery] = useState([]);
+  const [developer, setDeveloper] = useState([]);
   const [name, setName] = useState("");
-  const [category, setCategory] = useState("AICC");
-
   // const [page, setPage] = useState(1);
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -25,13 +23,13 @@ function AllSocialMedia() {
       .then((res) => {
         if (res.status === 200) {
           axios
-            .get(`${SERVER_URL}/admin/get-social-media?category=${category}`, {
+            .get(`${SERVER_URL}/admin/developers`, {
               headers: { "x-access-token": token },
             })
             .then((userResponse) => {
               if (userResponse.status === 200) {
             
-                setGallery(userResponse?.data);
+                setDeveloper(userResponse?.data);
               }
             })
             .catch((err) => {
@@ -44,41 +42,30 @@ function AllSocialMedia() {
         navigate("/login");
       });
   }, [navigate]);
-const handleCategoryChange = (e) => {
-  setCategory(e.target.value);
-  axios.get(`${SERVER_URL}/admin/get-social-media?category=${e.target.value}`, {
-    headers: { "x-access-token": localStorage.getItem("token") },
-  }).then((res) => {
-    if (res.status === 200) {
-      setGallery(res?.data);
-    }
-  }).catch((err) => {
-    console.log(err.response.data);
-  })
-}
+
   // useEffect(() => {
   //   axios
-  //     .get(`${SERVER_URL}/product/gallery-with-pagination?page=${page}&limit=10`, {
+  //     .get(`${SERVER_URL}/product/developer-with-pagination?page=${page}&limit=10`, {
   //       headers: { "x-access-token": localStorage.getItem("token") },
   //     })
   //     .then((userResponse) => {
   //       if (userResponse.status === 200) {
-  //           setgallery(userResponse?.data.gallery);
+  //           setdeveloper(userResponse?.data.developer);
   //       }
   //     })
   //     .catch((err) => {
   //       console.log(err.response.data);
   //     });
   // }, [page]);
-  function handleDelete(socialId,itemId) {
+  function handleDelete(id) {
     axios
       .delete(
-        `${SERVER_URL}/admin/delete-social-media-details/${socialId}/${itemId}`,
+        `${SERVER_URL}/admin/delete-developer/${id}`,
         { headers: { "x-access-token": localStorage.getItem("token") } }
       )
       .then((res) => {
         if (res.status === 200) {
-          setGallery(gallery?.socialMediaSchema?.filter((product) => product._id !== socialId));
+          setDeveloper(developer?.filter((product) => product._id !== id));
         }
       })
       .catch((err) => {
@@ -91,30 +78,13 @@ const handleCategoryChange = (e) => {
       <div className="main-wrapper">
         <SideBar />
         <div className="page-wrapper">
-          <NavBar name={name} setName={setName} link="all-gallery" />
+          <NavBar name={name} setName={setName} link="all-developer" />
           <div className="page-content">
             <div className="row">
               <div className="col-md-12 grid-margin stretch-card">
                 <div className="card">
                   <div className="card-body">
                     <h6 className="card-title">Data Table</h6>
-                    <div className="mb-3">
-                        <label htmlFor="image" className="form-label">
-                          Category
-                        </label>
-                        <select
-                          className="form-select"
-                          name="category"
-                          value={category}
-                          onChange={handleCategoryChange}
-                        >
-                          <option value="">Select Category</option>
-                          <option value="AICC">AICC</option>
-                          <option value="KPCC">KPCC</option>
-                          <option value="DCC">DCC</option>
-                          <option value="UDF">UDF</option>
-                        </select>
-                      </div>
 
                     <div className="table-responsive">
                       <table id="dataTableExample" className="table">
@@ -122,37 +92,35 @@ const handleCategoryChange = (e) => {
                           <tr>
                             <th>Name</th>
                             <th>Image</th>
-                            <th>Postion</th>
-                            <th>Category</th>
+                            <th>Position</th>
                            
-                            <th>Edit</th>
+                            {/* <th>Edit</th> */}
                             <th>Delete</th>
                           </tr>
                         </thead>
                         <tbody>
-                          {gallery.socialMediaSchema?.map((product) => (
+                          {developer?.map((product) => (
                             <tr key="">
                               <th>{product?.name}</th>
-                              <th><img src={product?.image} style={{width:"10%"}} alt="" /></th>
+                              <th><img src={product?.image } style={{width:"10%"}} alt="" /></th>
                               <th>{product?.position}</th>
-                              <th>{gallery.category}</th>
                               
 
                              
-                              <th>
+                              {/* <th>
                                 <p
                                   className="btn btn-primary"
                                   onClick={() =>
-                                    navigate(`/edit-social-media/${gallery._id}/${product._id}`)
+                                    navigate("/edit-product/" + product._id)
                                   }
                                 >
                                   Edit
                                 </p>
-                              </th>
+                              </th> */}
                               <th>
                                 <p
                                   className="btn btn-danger"
-                              onClick={()=>handleDelete(gallery._id,product._id)}
+                              onClick={()=>handleDelete(product._id)}
                                 >
                                   Delete
                                 </p>
@@ -181,7 +149,7 @@ const handleCategoryChange = (e) => {
                           <li className="page-item active">
                             <a className="page-link">{page}</a>
                           </li>
-                          {gallery.length !== 0 && (
+                          {developer.length !== 0 && (
                             <li
                               className="page-item"
                               onClick={() => {
@@ -191,11 +159,11 @@ const handleCategoryChange = (e) => {
                               <a className="page-link">{page + 1}</a>
                             </li>
                           )}
-                          {gallery.length !== 0 && (
+                          {developer.length !== 0 && (
                             <li
                               className="page-item"
                               onClick={() => {
-                                if (gallery.length !== 0) {
+                                if (developer.length !== 0) {
                                   setPage(page + 1);
                                 }
                               }}
@@ -220,4 +188,4 @@ const handleCategoryChange = (e) => {
   );
 }
 
-export default AllSocialMedia;
+export default AllDeveloper;

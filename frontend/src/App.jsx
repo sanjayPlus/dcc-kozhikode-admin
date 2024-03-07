@@ -43,6 +43,9 @@ import AllReels from "./components/AllReels/AllReels";
 import AddSocialMedia from "./components/AddSocialMedia/AddSocialmedia";
 import AddLeaderShip from "./components/AddLeaderShip/AddLeaderShip";
 import AllSocialMedia from "./components/AllSocialMedia/AllSocialMedia";
+import EditSocialMedia from "./components/EditSocialMedia/EditSocialMedia";
+import AllDeveloper from "./components/AllDeveloper/AllDeveloper";
+import AddDeveloper from "./components/AddDeveloper/AddDeveloper";
 
 function App() {
   return (
@@ -90,6 +93,9 @@ function App() {
         <Route path="/add-social-media" element={<AddSocialMedia/>} />
         <Route path="/all-social-media" element={<AllSocialMedia/>} />
         <Route path="/add-leadership" element={<AddLeaderShip/>} />
+        <Route path="/edit-social-media/:socialId/:itemId" element={<EditSocialMedia/>} />
+        <Route path="/all-developers" element={<AllDeveloper/>} />
+        <Route path="/add-developer" element={<AddDeveloper/>} />
       </Routes>
       <LoadScriptOnRouteChange scriptSrc="/src/assets/js/template.js" />
       <Toaster />

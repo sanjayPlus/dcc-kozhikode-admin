@@ -15,6 +15,7 @@ function AddLeaderShip() {
     email: [],
     image: null,
     category: "",
+    link: "",
   });
   const [leadershipList, setLeadershipList] = useState([]);
   const navigate = useNavigate();
@@ -136,6 +137,7 @@ function AddLeaderShip() {
     formData.append("email", leaderShip.email);
     formData.append("category", leaderShip.category);
     formData.append("position", leaderShip.postion);
+    formData.append("link", leaderShip.link);
     const token = localStorage.getItem("token");
     axios
       .post(`${SERVER_URL}/admin/add-leadership`, formData, {
@@ -152,12 +154,13 @@ function AddLeaderShip() {
             email: [],
             category: "",
             postion: "",
+            link: "",
           });
           axios.get(`${SERVER_URL}/admin/leadership`).then((res) => {
             if (res.status === 200) {
               setLeadershipList(res.data);
             }
-          })
+          });
         }
       })
       .catch((err) => {
@@ -165,15 +168,17 @@ function AddLeaderShip() {
       });
   };
   const handleDelete = (id) => {
-    axios.delete(`${SERVER_URL}/admin/delete-leadership/${id}`,{
-      headers: { "x-access-token": localStorage.getItem("token") },
-    }).then((res) => {
-      if (res.status === 200) {
-        toast.success("LeaderShip deleted successfully");
-        setLeadershipList((prev) => prev.filter((item) => item._id !== id));
-      }
-    })
-  }
+    axios
+      .delete(`${SERVER_URL}/admin/delete-leadership/${id}`, {
+        headers: { "x-access-token": localStorage.getItem("token") },
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success("LeaderShip deleted successfully");
+          setLeadershipList((prev) => prev.filter((item) => item._id !== id));
+        }
+      });
+  };
 
   return (
     <>
@@ -200,6 +205,21 @@ function AddLeaderShip() {
                           placeholder="name"
                           name="name"
                           value={leaderShip.name}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label htmlFor="link" className="form-label">
+                          Link
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="link"
+                          autoComplete="off"
+                          placeholder="link"
+                          name="link"
+                          value={leaderShip.link}
                           onChange={handleChange}
                         />
                       </div>
@@ -375,7 +395,7 @@ function AddLeaderShip() {
                           <tr>
                             <th>Name</th>
                             <th>Image</th>
-                            <th>Description</th>
+                            <th>Category</th>
 
                             {/* <th>Edit</th> */}
                             <th>Delete</th>
@@ -395,7 +415,7 @@ function AddLeaderShip() {
                                   alt=""
                                 />
                               </th>
-                              <th>{product?.description}</th>
+                              <th>{product?.category}</th>
 
                               {/* <th>
                                 <p

@@ -263,6 +263,18 @@ function SideBar() {
               <span className="link-title">leaderShip</span>
             </Link>
           </li>
+          <li className="nav-item">
+            <Link to="/all-developers" className="nav-link">
+              <i className="link-icon" data-feather="box" />
+              <span className="link-title">All Developers</span>
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/add-developer" className="nav-link">
+              <i className="link-icon" data-feather="box" />
+              <span className="link-title">Add Developer</span>
+            </Link>
+          </li>
        
     
         </ul>
