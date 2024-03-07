@@ -153,6 +153,11 @@ function AddLeaderShip() {
             category: "",
             postion: "",
           });
+          axios.get(`${SERVER_URL}/admin/leadership`).then((res) => {
+            if (res.status === 200) {
+              setLeadershipList(res.data);
+            }
+          })
         }
       })
       .catch((err) => {
@@ -160,9 +165,12 @@ function AddLeaderShip() {
       });
   };
   const handleDelete = (id) => {
-    axios.delete(`${SERVER_URL}/admin/delete-leadership/${id}`).then((res) => {
+    axios.delete(`${SERVER_URL}/admin/delete-leadership/${id}`,{
+      headers: { "x-access-token": localStorage.getItem("token") },
+    }).then((res) => {
       if (res.status === 200) {
         toast.success("LeaderShip deleted successfully");
+        setLeadershipList((prev) => prev.filter((item) => item._id !== id));
       }
     })
   }
