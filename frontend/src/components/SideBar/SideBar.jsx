@@ -245,6 +245,24 @@ function SideBar() {
               <span className="link-title">All Reels</span>
             </Link>
           </li>
+          <li className="nav-item">
+            <Link to="/add-social-media" className="nav-link">
+              <i className="link-icon" data-feather="box" />
+              <span className="link-title">Add Social Media</span>
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/all-social-media" className="nav-link">
+              <i className="link-icon" data-feather="box" />
+              <span className="link-title">All Social Media</span>
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/add-leadership" className="nav-link">
+              <i className="link-icon" data-feather="box" />
+              <span className="link-title">leaderShip</span>
+            </Link>
+          </li>
        
     
         </ul>
