@@ -135,7 +135,7 @@ function AddLeaderShip() {
     formData.append("phone", leaderShip.phone);
     formData.append("email", leaderShip.email);
     formData.append("category", leaderShip.category);
-    formData.append("postion", leaderShip.postion);
+    formData.append("position", leaderShip.postion);
     const token = localStorage.getItem("token");
     axios
       .post(`${SERVER_URL}/admin/add-leadership`, formData, {
@@ -148,6 +148,10 @@ function AddLeaderShip() {
             name: "",
             address: "",
             image: null,
+            phone: [],
+            email: [],
+            category: "",
+            postion: "",
           });
         }
       })
